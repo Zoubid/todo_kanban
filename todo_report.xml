@@ -1,0 +1,77 @@
+<openerp>
+<data>
+	<report id="report_todo_task_action"
+		string="To-do Tasks"
+		model="toddo.task"
+		report_type="qweb-pdf"
+		name="todo_kanban.report"
+		file="todo_kanban.report" />
+
+		<template id="report">
+			<t t-call="report.html_container">
+            <t t-foreach="docs" t-as="doc">
+			<t t-call="report.external_layout">
+								<div class="page">
+														<div class="row">
+														<div class="col-xs-12">
+														<h2><span t-field="doc.name" /></h2>
+														</div>
+														<div class="row">
+															<div class="col-xs-8">
+															By: <span t-field="doc.user_id" />
+														</div>
+							
+														<div class="col-xs-4">
+														Deadline: <span t-field="doc.date_deadline" />
+													</div> 
+												</div> 
+											</div> 
+
+
+									<table class="table table-bordered">
+									<!-- Table header -->
+									<tr>
+									<th>Avatar</th>
+									<th>Name</th>
+									</tr>
+									<!-- Table rows -->
+									<t t-foreach="doc.message_follower_ids" t-as="f">
+									<!-- Each row -->
+									<tr>
+									<td>
+									<img t-if="f.image_small"
+									t-att-src="'data:image/png;base64,%s' %
+									f.image_small"
+									style="max-height: 32px;" />
+									</td>
+									<td>
+									<span t-field="f.name"/>
+									</td>
+									</tr>
+									<!-- Totals in a last row -->
+									<t t-if="f_last">
+									<tr>
+									<td colspan="2">
+									<strong><p class="text-right">
+									<t t-esc="len(doc.message_follower_ids)"/>
+									followers
+								</p>
+							</strong>
+							</td>
+</tr>
+</t>
+<!-- End table totals -->
+</t>
+</table>
+
+
+
+
+
+										</div> 
+									</t>
+								</t>
+			</t>
+			</template> 
+	</data>
+</openerp>
